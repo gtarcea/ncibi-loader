@@ -15,6 +15,7 @@ import com.google.common.base.Splitter;
  * @author gtarcea
  * 
  */
+@SuppressWarnings("serial")
 public class CSVDecoder extends AbstractConfigurable implements DataDecoder
 {
     @Override

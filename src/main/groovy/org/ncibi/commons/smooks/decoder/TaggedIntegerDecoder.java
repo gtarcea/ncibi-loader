@@ -12,6 +12,7 @@ import org.milyn.javabean.DataDecoder;
  * @author gtarcea
  * 
  */
+@SuppressWarnings("serial")
 public class TaggedIntegerDecoder extends AbstractConfigurable implements DataDecoder
 {
 

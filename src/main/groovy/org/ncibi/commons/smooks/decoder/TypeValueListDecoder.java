@@ -9,6 +9,7 @@ import org.milyn.javabean.DataDecoder;
  * @author gtarcea
  * 
  */
+@SuppressWarnings("serial")
 public class TypeValueListDecoder extends AbstractConfigurable implements DataDecoder
 {
 

@@ -27,4 +27,9 @@ public class AbstractConfigurable implements Configurable
         this.config = config;
     }
 
+	@Override
+	public Properties getConfiguration() {
+		return config;
+	}
+
 }
