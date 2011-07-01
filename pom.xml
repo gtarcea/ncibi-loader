@@ -2,10 +2,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
         http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.ncibi.commons.smooks</groupId>
-    <artifactId>ncibi-commons-smooks</artifactId>
+    <groupId>org.ncibi.commons</groupId>
+    <artifactId>ncibi-loader</artifactId>
     <version>1.0</version>
-    <name>ncibi-commons-smooks</name>
+    <name>ncibi-loader</name>
     <organization>
         <name>NCIBI</name>
         <url>http://www.ncibi.org/</url>
