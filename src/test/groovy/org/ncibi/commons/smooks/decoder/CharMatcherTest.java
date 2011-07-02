@@ -19,6 +19,14 @@ public class CharMatcherTest
     }
     
     @Test
+    public void testCleanerCharMatcher()
+    {
+        String clean = "&|^,";
+        String str = "|Hello& World|";
+        System.out.println(CharMatcher.anyOf(clean).removeFrom(str));
+    }
+    
+    @Test
     public void testMultipleSplits()
     {
         System.out.println("\n");
