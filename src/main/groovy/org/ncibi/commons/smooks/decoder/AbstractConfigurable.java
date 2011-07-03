@@ -24,6 +24,8 @@ public class AbstractConfigurable implements Configurable
     @Override
     public void setConfiguration(final Properties config) throws SmooksConfigurationException
     {
+        System.out.println("setConfiguration called");
+        System.out.println(config);
         this.config = config;
     }
 
