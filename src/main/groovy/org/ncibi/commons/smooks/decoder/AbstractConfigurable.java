@@ -6,9 +6,9 @@ import org.milyn.cdr.SmooksConfigurationException;
 import org.milyn.config.Configurable;
 
 /**
- * A base class that a Configurable. Since most classes implementing the Configurable interface will
- * need to get the config Properties and save it as a class variable this class saves the boiler
- * plate code.
+ * A base class that a Configurable. Since most classes implementing the
+ * Configurable interface will need to get the config Properties and save it as
+ * a class variable this class saves the boiler plate code.
  * 
  * @author gtarcea
  * 
@@ -16,22 +16,21 @@ import org.milyn.config.Configurable;
 public class AbstractConfigurable implements Configurable
 {
     /**
-     * Accessible by classes extending this class. Provides access to the configuration for the
-     * decoder.
+     * Accessible by classes extending this class. Provides access to the
+     * configuration for the decoder.
      */
     protected Properties config;
 
     @Override
     public void setConfiguration(final Properties config) throws SmooksConfigurationException
     {
-        System.out.println("setConfiguration called");
-        System.out.println(config);
         this.config = config;
     }
 
-	@Override
-	public Properties getConfiguration() {
-		return config;
-	}
+    @Override
+    public Properties getConfiguration()
+    {
+        return config;
+    }
 
 }

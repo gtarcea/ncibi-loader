@@ -14,8 +14,8 @@ public class ReflectiveTypeStringCleanerDecoder extends AbstractConfigurable imp
     @Override
     public Object decode(String value) throws DataDecodeException
     {
-        String classType = config.getProperty("type");
-        String charactersToRemove = config.getProperty("cleaner");
+        String classType = config.getProperty("type").trim();
+        String charactersToRemove = config.getProperty("cleaner").trim();
         String cleanedValue = CharMatcher.anyOf(charactersToRemove).removeFrom(value);
         try
         {
@@ -23,6 +23,7 @@ public class ReflectiveTypeStringCleanerDecoder extends AbstractConfigurable imp
         }
         catch (Throwable t)
         {
+            t.printStackTrace();
             throw new DataDecodeException("Error decoding type: " + classType + ", for value: " + value);
         }
         
@@ -42,7 +43,9 @@ public class ReflectiveTypeStringCleanerDecoder extends AbstractConfigurable imp
             {
                 cleanedValue = "true";
             }
+            else { cleanedValue = "false"; }
         }
+        System.out.println("cleanedValue = " + cleanedValue);
         return c.newInstance(cleanedValue);
     }
 }

@@ -12,7 +12,6 @@ public class StringCleanerDecoder extends AbstractConfigurable implements DataDe
     public Object decode(String value) throws DataDecodeException
     {
         String charactersToRemove = config.getProperty("cleaner");
-        System.out.println("charactersToRemove = " + charactersToRemove);
         return CharMatcher.anyOf(charactersToRemove).removeFrom(value);
     }
 
