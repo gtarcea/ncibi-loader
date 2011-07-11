@@ -15,7 +15,16 @@ class LoaderScript
     {
         this.loader = loader
         this.config = new LoaderConfiguration(loader)
-        this.loaderDir = LoaderUtil. getLoaderDir(loader) - '/'
+        //this.loaderDir = LoaderUtil. getLoaderDir(loader) - '/'
+        String tempLoaderDir = LoaderUtil. getLoaderDir(loader) //- '/' test this on linux and windows.
+        if (FileUtilities.fileExists(tempLoaderDir))
+        {
+            this.loaderDir = tempLoaderDir
+        }
+        else
+        {
+            this.loaderDir = tempLoaderDir - '/'
+        }
         this.runScript = script
     }
 
