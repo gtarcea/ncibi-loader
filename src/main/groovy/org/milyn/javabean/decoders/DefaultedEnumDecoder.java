@@ -1,4 +1,4 @@
-package org.ncibi.commons.smooks.decoder;
+package org.milyn.javabean.decoders;
 
 import java.util.Properties;
 
