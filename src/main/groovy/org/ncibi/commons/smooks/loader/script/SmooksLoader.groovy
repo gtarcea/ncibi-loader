@@ -43,7 +43,16 @@ final class SmooksLoader
         final String persistenceUnit = loaderConfig.getProperty("persistence-unit")
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistenceUnit)
         
-        this.loaderDir = ClassLoaderUtils.getSystemResourceAsFilePath("loaders/${loader}") - '/'
+        //this.loaderDir = ClassLoaderUtils.getSystemResourceAsFilePath("loaders/${loader}") - '/'
+        String tempLoaderDir = LoaderUtil. getLoaderDir(loader) //- '/' test this on linux and windows.
+        if (FileUtilities.fileExists(tempLoaderDir))
+        {
+            this.loaderDir = tempLoaderDir
+        }
+        else
+        {
+            this.loaderDir = tempLoaderDir - '/'
+        }
         this.em = emf.createEntityManager()
         this.db = new Sql(em.getDelegate().connection())
         def dao = new CachingDao(em, closure)
