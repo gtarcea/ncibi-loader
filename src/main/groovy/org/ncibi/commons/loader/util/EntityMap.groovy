@@ -76,4 +76,12 @@ class EntityMap
         entityMap = [:]
         cacheSize = 0
     }
+    
+    public def writeAllMapEntries()
+    {
+        entityMap.each { key, data -> 
+            session.saveOrUpdate(data);
+        }
+        session.flush();
+    }
 }

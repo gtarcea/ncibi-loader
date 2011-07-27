@@ -32,7 +32,7 @@ class LoaderRunner
         def loaderName = loader
         if (colon != -1)
         {
-            def flag = loader[colon+1..<loader.size()-1]
+            def flag = loader[colon+1..<loader.size()]
             if (flag.toLowerCase() == "false")
             {
                 initDb = false
