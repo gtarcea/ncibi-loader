@@ -43,8 +43,7 @@ final class SmooksLoader
         final String persistenceUnit = loaderConfig.getProperty("persistence-unit")
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistenceUnit)
         
-        //this.loaderDir = ClassLoaderUtils.getSystemResourceAsFilePath("loaders/${loader}") - '/'
-        String tempLoaderDir = LoaderUtil. getLoaderDir(loader) //- '/' test this on linux and windows.
+        String tempLoaderDir = LoaderUtil. getLoaderDir(loader) 
         if (FileUtilities.fileExists(tempLoaderDir))
         {
             this.loaderDir = tempLoaderDir
@@ -63,28 +62,34 @@ final class SmooksLoader
     {
         return new SmooksLoader(loader, closure)
     }
-
+    
+    public static def runSqlScript(dbConnection, script)
+    {
+        String sql = new File(script).text
+        dbConnection.execute(sql)
+    }
+    
+    public void run(boolean initializeDb)
+    {
+        if (initializeDb)
+        {
+            initializeDatabase()
+        }
+        
+        File ds = new File(ClassLoaderUtils.getSystemResourceAsFilePath("loaders/${loader}/datasources.txt"))
+        ds.eachLine { line ->
+            loadDataSource(line)
+        }
+        finishLoad()
+    }
+    
     protected void initializeDatabase()
     {
         if (FileUtilities.fileExists("${loaderDir}/SQL/init.sql"))
         {
             runLoaderSqlScript("init.sql")
         }
-    }
-    
-    public void finishLoad()
-    {
-        if (FileUtilities.fileExists("${loaderDir}/SQL/finish.sql"))
-        {
-            runLoaderSqlScript("finish.sql")
-        }
-    }
-    
-    public final InputStream openAsInputStream(File f)
-    {
-        def inputStream = f.newInputStream()
-        return (f =~ /\.gz$/) ? new GZIPInputStream(inputStream) : inputStream
-    }
+    }  
     
     protected final void loadDataSource(String line)
     {
@@ -113,37 +118,31 @@ final class SmooksLoader
             InputStream inputStream = openAsInputStream(file)
             loader.load(inputStream, null)
         }
+    }  
+    
+    public final InputStream openAsInputStream(File f)
+    {
+        def inputStream = f.newInputStream()
+        return (f =~ /\.gz$/) ? new GZIPInputStream(inputStream) : inputStream
+    }
+      
+    public void finishLoad()
+    {
+        if (FileUtilities.fileExists("${loaderDir}/SQL/finish.sql"))
+        {
+            runLoaderSqlScript("finish.sql")
+        }
     }
     
-    public static def runSqlScript(dbConnection, script)
-    {
-        String sql = new File(script).text
-        dbConnection.execute(sql)
-    }
-
     public final def runLoaderSqlScript(script)
     {
         String sql = new File(loaderSqlScript(script)).text
         db.execute(sql)
     }
-
+    
     protected final def loaderSqlScript(script)
     {
         String scriptPath = ClassLoaderUtils.getSystemResourceAsFilePath("loaders/${loader}/SQL/${script}")
         return scriptPath
-    }
-    
-    public void run(boolean initializeDb)
-    {
-        if (initializeDb)
-        {
-            initializeDatabase()
-        }
-        
-        File ds = new File(ClassLoaderUtils.getSystemResourceAsFilePath("loaders/${loader}/datasources.txt"))
-        ds.eachLine { line ->
-            loadDataSource(line)
-        }
-        finishLoad()
     }
 }
